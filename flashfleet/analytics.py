@@ -306,6 +306,28 @@ class BaselineAnalytics:
         avg_transit_days: float = transit_row["avg_transit_days"] or 0.0
         p90_transit_days: float = transit_row["p90_transit_days"] or 0.0
 
+        # ----- Baseline SLA breach rate --------------------------------
+        sql_breach = f"""
+        WITH breach_calc AS (
+            SELECT
+                CASE WHEN (
+                    julianday(o.order_delivered_customer_date)
+                    - julianday(o.order_estimated_delivery_date)
+                ) > 0 THEN 1 ELSE 0 END AS is_breached
+            FROM orders o
+            {region_join}
+            WHERE o.order_status = 'delivered'
+              AND o.order_delivered_customer_date IS NOT NULL
+              AND o.order_estimated_delivery_date IS NOT NULL
+              {region_where}
+        )
+        SELECT
+            ROUND(100.0 * SUM(is_breached) / MAX(COUNT(*), 1), 2) AS baseline_breach_rate_pct
+        FROM breach_calc;
+        """
+        breach_row = dict(self._conn.execute(sql_breach, params).fetchone())
+        baseline_breach_rate_pct: float = breach_row["baseline_breach_rate_pct"] or 0.0
+
         return {
             "avg_daily_orders": avg_daily_orders,
             "avg_weekly_orders": avg_weekly_orders,
@@ -313,6 +335,7 @@ class BaselineAnalytics:
             "avg_package_weight_g": avg_package_weight_g,
             "avg_transit_days": avg_transit_days,
             "p90_transit_days": p90_transit_days,
+            "baseline_breach_rate_pct": baseline_breach_rate_pct,
             "total_orders": total_orders,
             "date_range_days": date_range_days,
             "region": region or "ALL",

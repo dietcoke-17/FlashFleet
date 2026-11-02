@@ -69,7 +69,13 @@ def cmd_simulate(args: argparse.Namespace) -> None:
     print(f"  • Total Marginal Cost:     R${res.cost.total_marginal_cost_brl:,.2f}")
     print(f"  • Cost Per Surge Order:    R${res.cost.cost_per_order_brl:,.2f}")
 
-    print("\n[5] BOTTLENECK & RISK ANALYSIS")
+    print("\n[5] ACTIONABLE SLA OPTIMIZATION IMPACT")
+    print(f"  • Baseline SLA Breach:     {res.sla_impact.baseline_breach_rate_pct:.1f}%")
+    print(f"  • Unmitigated Surge Risk:  {res.sla_impact.unmitigated_surge_breach_rate_pct:.1f}%")
+    print(f"  • Mitigated Breach Rate:   {res.sla_impact.optimized_breach_rate_pct:.1f}% (-{res.sla_impact.sla_breach_reduction_pct:.1f}% reduction)")
+    print(f"  • Orders Protected:        {res.sla_impact.prevented_breaches:,} deliveries saved from SLA breach")
+
+    print("\n[6] BOTTLENECK & RISK ANALYSIS")
     print(f"  • Risk Level:              [{res.bottleneck_analysis.risk_level}]")
     if res.bottleneck_analysis.bottlenecks:
         print("  • Identified Bottlenecks:")

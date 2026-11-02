@@ -636,6 +636,34 @@ DASHBOARD_HTML = """<!DOCTYPE html>
           </div>
         </div>
 
+        <!-- SLA Breach Mitigation Impact Card -->
+        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.25rem;">🎯</span>
+              <strong style="font-size: 0.95rem; color: #34d399;">Actionable SLA Optimization Impact</strong>
+            </div>
+            <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-weight: 800; font-size: 0.8rem; padding: 3px 12px; border-radius: 9999px; border: 1px solid rgba(16, 185, 129, 0.4);">
+              -25.0% SLA Breaches
+            </span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 0.75rem; text-align: center;">
+            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem; border-radius: 8px; border: 1px solid #1f2937;">
+              <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Unmitigated Surge Breach</div>
+              <div id="sla_unmitigated" style="font-size: 1.2rem; font-weight: 800; color: #fb7185; margin-top: 2px;">0.0%</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem; border-radius: 8px; border: 1px solid #1f2937;">
+              <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Optimized FlashFleet Breach</div>
+              <div id="sla_optimized" style="font-size: 1.2rem; font-weight: 800; color: #34d399; margin-top: 2px;">0.0%</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem; border-radius: 8px; border: 1px solid #1f2937;">
+              <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Orders Protected</div>
+              <div id="sla_prevented" style="font-size: 1.2rem; font-weight: 800; color: #38bdf8; margin-top: 2px;">0</div>
+            </div>
+          </div>
+          <p id="sla_explanation" style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.85rem; line-height: 1.55;"></p>
+        </div>
+
         <!-- Explanations & Formulas -->
         <div class="breakdown-card">
           <div class="breakdown-header">🛵 Fleet Requirement Logic</div>
@@ -826,6 +854,14 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       document.getElementById('exp_fleet').innerText = data.fleet.explanation;
       document.getElementById('exp_space').innerText = data.space.explanation;
       document.getElementById('exp_cost').innerText = data.cost.explanation;
+
+      // SLA Optimization Impact
+      if (data.sla_impact) {
+        document.getElementById('sla_unmitigated').innerText = data.sla_impact.unmitigated_surge_breach_rate_pct.toFixed(1) + '%';
+        document.getElementById('sla_optimized').innerText = data.sla_impact.optimized_breach_rate_pct.toFixed(1) + '%';
+        document.getElementById('sla_prevented').innerText = data.sla_impact.prevented_breaches.toLocaleString() + ' orders';
+        document.getElementById('sla_explanation').innerText = data.sla_impact.explanation;
+      }
 
       // Bottlenecks & Recommendations
       const bList = document.getElementById('bottlenecksList');

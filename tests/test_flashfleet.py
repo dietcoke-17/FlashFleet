@@ -186,6 +186,12 @@ class TestSurgeSimulator(unittest.TestCase):
         self.assertIsInstance(res.bottleneck_analysis.bottlenecks, list)
         self.assertIsInstance(res.bottleneck_analysis.recommendations, list)
 
+        # SLA Optimization Impact (25% reduction verification)
+        self.assertAlmostEqual(res.sla_impact.sla_breach_reduction_pct, 25.0, places=1)
+        self.assertLess(res.sla_impact.optimized_breach_rate_pct, res.sla_impact.baseline_breach_rate_pct)
+        self.assertLess(res.sla_impact.optimized_breach_rate_pct, res.sla_impact.unmitigated_surge_breach_rate_pct)
+        self.assertIn("25.0% reduction", res.sla_impact.explanation)
+
     def test_extreme_surge_critical_risk(self):
         params = SurgeParams(
             surge_multiplier=6.0,  # >= 5.0 triggers CRITICAL

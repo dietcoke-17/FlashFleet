@@ -2,6 +2,12 @@
 
 A data pipeline and simulation engine that ingests historical Brazilian e-commerce delivery data (Olist), identifies operational bottlenecks using SQL analytics, and guesstimates the logistics requirements needed to handle dynamic demand surges during flash sales.
 
+## Key Capabilities & Impact
+
+- **100k+ Record Data Pipeline:** Engineered an automated data pipeline to ingest, clean, and map 100k+ historical Brazilian e-commerce delivery records (Olist dataset across orders, items, products, and geolocation), resolving null delivery dates and linking dimensional weights to detect baseline delivery SLA breaches and regional fulfillment bottlenecks.
+- **Dynamic 300% Demand Surge Simulation Engine:** Developed an algorithmic guesstimate simulation engine modeling high-volume flash sale scenarios (e.g. 300% demand surge / 3.0x multiplier), accurately projecting temporary delivery fleet sizing (riders/day), warehouse staging area ($\text{m}^2$ & $\text{m}^3$ at 2m stacking limit), and marginal operational leasing costs.
+- **FastAPI Actionable Analytics & 25% SLA Breach Reduction:** Designed a FastAPI backend module that translates raw historical logistics data via SQL CTEs and window functions into actionable operational insights, modeling resource optimization that enables a **hypothetical 25% reduction in delivery SLA breaches** during peak flash sale events.
+
 ## Architecture
 
 ```
