@@ -21,3 +21,4 @@ if not DB_PATH.exists():
         print(f"Warning: Could not auto-seed database on startup: {exc}")
 
 from flashfleet.api import app  # noqa: E402
+
