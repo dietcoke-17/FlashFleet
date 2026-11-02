@@ -67,6 +67,28 @@ python3 -m unittest discover -s tests
 ```bash
 uvicorn flashfleet.api:app --reload
 ```
+Or simply run:
+```bash
+./run.sh
+```
+Open **`http://127.0.0.1:8000`** in your browser for the interactive simulator dashboard.
+
+---
+
+## Deploy to Vercel
+
+FlashFleet is pre-configured for serverless deployment on Vercel:
+
+1. Push your repository to GitHub (already completed at [`dietcoke-17/FlashFleet`](https://github.com/dietcoke-17/FlashFleet)).
+2. Log in to [Vercel Dashboard](https://vercel.com/new).
+3. Select **Import** next to your `dietcoke-17/FlashFleet` repository.
+4. Leave all default build settings (**Other** framework preset) — Vercel detects `vercel.json` and `api/index.py` automatically.
+5. Click **Deploy**.
+
+Alternatively, deploy directly from your command line:
+```bash
+npx vercel
+```
 
 The server runs at `http://127.0.0.1:8000`. Interactive API docs are at `http://127.0.0.1:8000/docs`.
 
