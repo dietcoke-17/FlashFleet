@@ -1,257 +1,299 @@
-"""HTML template for the FlashFleet interactive web dashboard."""
+"""HTML template for the FlashFleet interactive web dashboard.
+
+Built following tasteskill 2.5 (anti-slop frontend design system for software/tech):
+- Kind: software (data-type="software", site-kind="software")
+- Palette: blue-black-cornflower (#0a0d14, #131824, #e9edf3, #5ab9fc)
+- Type: Urbanist + DM Mono
+- Equal edges, semantic <main> and <section> tags, quiet micro-interactions
+"""
 
 DASHBOARD_HTML = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-type="software" data-radius="soft">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlashFleet — Logistics Surge Capacity Simulator</title>
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <title>FlashFleet — E-Commerce Fulfillment & Surge Capacity Simulator</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #111827;
-      --card-border: #1f2937;
-      --card-hover: #1e293b;
-      --text-main: #f9fafb;
-      --text-muted: #94a3b8;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --accent-cyan: #06b6d4;
-      --accent-emerald: #10b981;
-      --accent-amber: #f59e0b;
-      --accent-rose: #f43f5e;
-      --accent-purple: #8b5cf6;
-      --radius: 14px;
-      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
+      --p-bg: #0a0d14;
+      --p-surface: #131824;
+      --p-surface-2: #1b2335;
+      --p-border: #222d42;
+      --p-border-hover: #334360;
+      --p-ink: #e9edf3;
+      --p-muted: #8891a1;
+      --p-accent: #5ab9fc;
+      --p-accent-ink: #0a0d14;
+      --p-action: #5ab9fc;
+      --p-action-hover: #38a5f8;
+      
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --cyan: #06b6d4;
+
+      --font-display: "Urbanist", system-ui, sans-serif;
+      --font-text: "Urbanist", system-ui, sans-serif;
+      --font-mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+      
+      --display-weight: 600;
+      --display-tracking: -0.03em;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --container: 1320px;
+      --gut: 24px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-family: var(--font);
+      background-color: var(--p-bg);
+      color: var(--p-ink);
+      font-family: var(--font-text);
       min-height: 100vh;
-      line-height: 1.5;
-      padding-bottom: 60px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* Header */
-    header {
-      background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0) 100%);
-      border-bottom: 1px solid var(--card-border);
-      padding: 1.25rem 2rem;
+    header.site-nav {
+      background: rgba(10, 13, 20, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--p-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 0;
+    }
+    .nav-wrap {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--gut);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(12px);
-      z-index: 50;
     }
-    .brand {
+    .brand-group {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .logo-badge {
-      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-      color: white;
-      font-weight: 800;
-      font-size: 1.25rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+    .brand-symbol {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #2563eb 0%, #5ab9fc 100%);
+      color: #0a0d14;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
-    }
-    .brand-title h1 {
-      font-size: 1.35rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(90, 185, 252, 0.25);
     }
-    .brand-title p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .brand-meta h1 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: var(--display-tracking);
+      color: #ffffff;
+      line-height: 1.2;
     }
-    .header-actions {
+    .brand-meta p {
+      font-size: 0.78rem;
+      color: var(--p-muted);
+    }
+
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .status-pill {
+    .live-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
+      padding: 5px 12px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 9999px;
+      color: #34d399;
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseAnim 2s infinite;
     }
-    @keyframes pulse {
+    @keyframes pulseAnim {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+      50% { opacity: 0.4; transform: scale(0.85); }
     }
-    .docs-btn {
-      color: var(--text-muted);
+    .btn-docs {
+      color: var(--p-muted);
       text-decoration: none;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       padding: 6px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--card-border);
-      background: var(--card-bg);
-      transition: all 0.2s;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--p-border);
+      background: var(--p-surface);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .docs-btn:hover {
-      color: white;
-      border-color: #3b82f6;
+    .btn-docs:hover {
+      color: #ffffff;
+      border-color: var(--p-action);
+      transform: translateY(-1px);
     }
 
-    /* Layout */
-    .container {
-      max-width: 1400px;
+    /* Main Container */
+    main.wrap {
+      max-width: var(--container);
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem var(--gut) 4rem var(--gut);
     }
-    .grid-main {
+
+    /* Section Rhythm */
+    section {
+      margin-bottom: 3.5rem;
+    }
+    .section-head {
+      margin-bottom: 1.5rem;
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: var(--display-tracking);
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+    .section-head p {
+      font-size: 0.88rem;
+      color: var(--p-muted);
+    }
+
+    /* Layout Grid */
+    .sim-grid {
       display: grid;
       grid-template-columns: 380px 1fr;
       gap: 1.75rem;
       align-items: start;
     }
     @media (max-width: 1024px) {
-      .grid-main { grid-template-columns: 1fr; }
+      .sim-grid { grid-template-columns: 1fr; }
     }
 
-    /* Cards */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+    /* Panels */
+    .panel {
+      background: var(--p-surface);
+      border: 1px solid var(--p-border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .card-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
+      padding: 1.6rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     }
 
-    /* Form Controls */
-    .form-group {
+    /* Presets */
+    .preset-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .btn-preset {
+      background: var(--p-surface-2);
+      border: 1px solid var(--p-border);
+      color: var(--p-muted);
+      padding: 5px 11px;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-preset:hover {
+      background: var(--p-border);
+      color: #ffffff;
+    }
+    .btn-preset.active {
+      background: rgba(90, 185, 252, 0.15);
+      border-color: var(--p-action);
+      color: var(--p-action);
+    }
+
+    /* Form Fields */
+    .field {
       margin-bottom: 1.25rem;
     }
-    .form-group label {
+    .field label {
       display: flex;
       justify-content: space-between;
       font-size: 0.82rem;
       font-weight: 600;
-      color: #e2e8f0;
+      color: #cbd5e1;
       margin-bottom: 0.4rem;
     }
-    .form-group label span.val {
-      color: var(--accent-cyan);
-      font-family: var(--mono);
+    .field label span.num {
+      color: var(--p-accent);
+      font-family: var(--font-mono);
       font-weight: 700;
     }
-    .input-range {
+    .slider {
       width: 100%;
       height: 6px;
       border-radius: 4px;
-      background: #334155;
+      background: #1e293b;
       outline: none;
       -webkit-appearance: none;
     }
-    .input-range::-webkit-slider-thumb {
+    .slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: var(--primary);
+      background: var(--p-action);
       cursor: pointer;
-      box-shadow: 0 0 10px var(--primary);
-      transition: 0.15s;
+      box-shadow: 0 0 10px rgba(90, 185, 252, 0.6);
+      transition: transform 0.15s;
     }
-    .input-range::-webkit-slider-thumb:hover {
+    .slider::-webkit-slider-thumb:hover {
       transform: scale(1.15);
     }
-    .input-select, .input-text {
+    .select-box, .text-box {
       width: 100%;
-      padding: 0.65rem 0.85rem;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      color: white;
-      font-family: var(--font);
+      padding: 0.7rem 0.85rem;
+      background: var(--p-surface-2);
+      border: 1px solid var(--p-border);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-family: var(--font-text);
       font-size: 0.88rem;
       outline: none;
       transition: border 0.2s;
     }
-    .input-select:focus, .input-text:focus {
-      border-color: var(--primary);
-    }
-    .presets {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-    }
-    .preset-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .preset-btn:hover {
-      background: #334155;
-      color: white;
-    }
-    .preset-btn.active {
-      background: rgba(59, 130, 246, 0.2);
-      border-color: var(--primary);
-      color: #60a5fa;
+    .select-box:focus, .text-box:focus {
+      border-color: var(--p-action);
     }
 
-    .btn-run {
+    .btn-submit {
       width: 100%;
-      padding: 0.85rem;
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      color: white;
+      padding: 0.9rem;
+      background: var(--p-action);
+      color: var(--p-action-ink);
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
@@ -259,172 +301,237 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4);
-      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(90, 185, 252, 0.35);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .btn-run:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 24px rgba(59, 130, 246, 0.5);
+    .btn-submit:hover {
+      background: var(--p-action-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(90, 185, 252, 0.45);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
     }
 
-    /* Results Header / Risk Banner */
+    /* Simulation Output Header / Risk Banner */
     .risk-banner {
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-sm);
+      padding: 1.15rem 1.4rem;
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border: 1px solid transparent;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
     }
     .risk-CRITICAL {
-      background: rgba(244, 63, 94, 0.12);
-      border-color: rgba(244, 63, 94, 0.4);
+      background: rgba(244, 63, 94, 0.1);
+      border-color: rgba(244, 63, 94, 0.35);
       color: #fb7185;
     }
     .risk-HIGH {
-      background: rgba(245, 158, 11, 0.12);
-      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.35);
       color: #fbbf24;
     }
     .risk-MEDIUM {
-      background: rgba(59, 130, 246, 0.12);
-      border-color: rgba(59, 130, 246, 0.4);
-      color: #60a5fa;
+      background: rgba(90, 185, 252, 0.1);
+      border-color: rgba(90, 185, 252, 0.35);
+      color: #7dd3fc;
     }
     .risk-LOW {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.35);
       color: #34d399;
     }
-    .risk-title {
-      font-size: 1.15rem;
-      font-weight: 800;
+    .risk-heading {
+      font-size: 1.05rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .risk-badge {
-      padding: 4px 12px;
+    .risk-tag {
+      padding: 3px 10px;
       border-radius: 9999px;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 800;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       background: currentColor;
     }
-    .risk-badge span {
-      color: #0b0f19;
+    .risk-tag span {
+      color: #0a0d14;
     }
 
     /* KPI Grid */
-    .kpi-grid {
+    .kpi-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
-    .kpi-card {
-      background: #162032;
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
+    .kpi-tile {
+      background: var(--p-surface-2);
+      border: 1px solid var(--p-border);
+      border-radius: var(--radius-sm);
       padding: 1.15rem;
       position: relative;
       overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
     }
-    .kpi-card::before {
+    .kpi-tile:hover {
+      border-color: var(--p-border-hover);
+      transform: translateY(-2px);
+    }
+    .kpi-tile::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--kpi-color, #3b82f6);
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--tile-bar, var(--p-action));
     }
-    .kpi-label {
-      font-size: 0.75rem;
+    .kpi-title {
+      font-size: 0.74rem;
       font-weight: 600;
-      color: var(--text-muted);
+      color: var(--p-muted);
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
     }
-    .kpi-value {
-      font-size: 1.65rem;
-      font-weight: 800;
-      font-family: var(--font);
-      letter-spacing: -0.02em;
+    .kpi-stat {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: var(--display-tracking);
       color: #ffffff;
       margin-bottom: 0.2rem;
     }
-    .kpi-desc {
+    .kpi-sub {
       font-size: 0.78rem;
       color: #94a3b8;
     }
 
-    /* Breakdown section */
-    .breakdown-card {
-      background: #141d2e;
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
+    /* Actionable SLA Impact Tile */
+    .sla-impact-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.04) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-sm);
       padding: 1.25rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
-    .breakdown-header {
-      font-size: 0.92rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .sla-impact-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sla-impact-title {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #e2e8f0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #34d399;
     }
-    .breakdown-text {
+    .sla-impact-badge {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 3px 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .sla-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    .sla-stat-box {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--p-border);
+    }
+    .sla-stat-label {
+      font-size: 0.68rem;
+      color: var(--p-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .sla-stat-val {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+    .sla-explanation {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      margin-top: 0.85rem;
+      line-height: 1.55;
+    }
+
+    /* Explanation Boxes */
+    .note-box {
+      background: var(--p-surface-2);
+      border: 1px solid var(--p-border);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem;
+      margin-bottom: 1rem;
+    }
+    .note-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .note-body {
       font-size: 0.84rem;
       color: #cbd5e1;
       line-height: 1.6;
     }
 
-    /* Bottlenecks & Recommendations */
-    .alerts-container {
-      margin-top: 1.5rem;
-    }
-    .alert-box {
-      border-radius: 10px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 0.75rem;
+    /* Bottleneck & Recommendations */
+    .callout {
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.15rem;
+      margin-bottom: 0.65rem;
       display: flex;
       gap: 12px;
       align-items: flex-start;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
-    .alert-box.bottleneck {
+    .callout.warn {
       background: rgba(245, 158, 11, 0.08);
       border: 1px solid rgba(245, 158, 11, 0.25);
       color: #fde68a;
     }
-    .alert-box.recommendation {
+    .callout.rec {
       background: rgba(16, 185, 129, 0.08);
       border: 1px solid rgba(16, 185, 129, 0.25);
       color: #a7f3d0;
     }
 
-    /* Analytics Explorer Section */
-    .analytics-section {
-      margin-top: 2.5rem;
-    }
-    .tabs {
+    /* Tabs & Tables */
+    .tab-bar {
       display: flex;
       gap: 8px;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--p-border);
       margin-bottom: 1.25rem;
     }
-    .tab-btn {
+    .tab-item {
       background: none;
       border: none;
-      color: var(--text-muted);
-      font-family: var(--font);
+      color: var(--p-muted);
+      font-family: var(--font-text);
       font-size: 0.88rem;
       font-weight: 600;
       padding: 0.65rem 1.2rem;
@@ -432,278 +539,296 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       border-bottom: 2px solid transparent;
       transition: all 0.2s;
     }
-    .tab-btn:hover {
-      color: white;
+    .tab-item:hover { color: #ffffff; }
+    .tab-item.active {
+      color: var(--p-action);
+      border-bottom-color: var(--p-action);
     }
-    .tab-btn.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
 
-    /* Tables */
-    .table-wrap {
+    .table-container {
       overflow-x: auto;
+      border: 1px solid var(--p-border);
+      border-radius: var(--radius-sm);
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       text-align: left;
     }
     th {
-      background: #1e293b;
+      background: var(--p-surface-2);
       color: #cbd5e1;
       padding: 0.75rem 1rem;
       font-weight: 600;
-      border-bottom: 1px solid #334155;
+      border-bottom: 1px solid var(--p-border);
     }
     td {
       padding: 0.75rem 1rem;
-      border-bottom: 1px solid #1e293b;
+      border-bottom: 1px solid var(--p-surface-2);
       color: #e2e8f0;
     }
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-    .bar-wrap {
-      background: #334155;
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    .pct-bar-bg {
+      background: #1e293b;
       height: 6px;
       border-radius: 3px;
-      width: 80px;
+      width: 70px;
       display: inline-block;
       margin-right: 8px;
       overflow: hidden;
       vertical-align: middle;
     }
-    .bar-fill {
+    .pct-bar-fill {
       height: 100%;
-      background: var(--accent-rose);
+      background: var(--rose);
       border-radius: 3px;
     }
 
-    /* Loader */
-    .loading-overlay {
+    footer.site-footer {
+      border-top: 1px solid var(--p-border);
+      padding: 2rem var(--gut);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--p-muted);
+    }
+    footer.site-footer a {
+      color: var(--p-accent);
+      text-decoration: none;
+    }
+
+    /* Loading Overlay */
+    .busy-overlay {
       display: none;
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 15, 25, 0.75);
+      background: rgba(10, 13, 20, 0.75);
       backdrop-filter: blur(4px);
       z-index: 20;
       border-radius: var(--radius);
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
       gap: 10px;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand">
-      <div class="logo-badge">⚡</div>
-      <div class="brand-title">
-        <h1>FlashFleet Simulator</h1>
-        <p>E-Commerce Fulfillment & Surge Capacity Planning</p>
+  <!-- Navigation -->
+  <header class="site-nav">
+    <div class="nav-wrap">
+      <div class="brand-group">
+        <div class="brand-symbol">⚡</div>
+        <div class="brand-meta">
+          <h1>FlashFleet</h1>
+          <p>E-Commerce Fulfillment & Surge Capacity Simulator</p>
+        </div>
       </div>
-    </div>
-    <div class="header-actions">
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span>SQLite Database Connected</span>
+      <div class="nav-actions">
+        <div class="live-badge">
+          <span class="pulse-dot"></span>
+          <span>100k+ Records Indexed</span>
+        </div>
+        <a href="/docs" target="_blank" class="btn-docs">API Docs ↗</a>
       </div>
-      <a href="/docs" target="_blank" class="docs-btn">Swagger API Docs ↗</a>
     </div>
   </header>
 
-  <div class="container">
+  <!-- Main Content -->
+  <main class="wrap">
 
-    <div class="grid-main">
-      <!-- LEFT: Control Panel -->
-      <div class="card" style="position: relative;">
-        <h2 class="card-title">🎛 Surge Parameters</h2>
-        <p class="card-subtitle">Configure top-down parameters for flash-sale demand.</p>
+    <!-- Section 1: Surge Simulator -->
+    <section id="simulator">
+      <div class="sim-grid">
+        
+        <!-- Controls Column -->
+        <div class="panel" style="position: relative;">
+          <div class="section-head" style="margin-bottom: 1.1rem;">
+            <h2>🎛 Surge Parameters</h2>
+            <p>Model dynamic flash-sale volume increases.</p>
+          </div>
 
-        <div class="presets">
-          <button class="preset-btn active" onclick="setPreset(3.0, 3, 'SP')">Weekend 3x</button>
-          <button class="preset-btn" onclick="setPreset(5.0, 5, 'SP')">Mega Flash 5x</button>
-          <button class="preset-btn" onclick="setPreset(2.0, 2, 'RJ')">Mini Surge 2x</button>
-          <button class="preset-btn" onclick="setPreset(8.0, 7, null)">Black Friday 8x</button>
+          <div class="preset-bar">
+            <button class="btn-preset active" onclick="setPreset(3.0, 3, 'SP')">Weekend 3x</button>
+            <button class="btn-preset" onclick="setPreset(5.0, 5, 'SP')">Mega 5x</button>
+            <button class="btn-preset" onclick="setPreset(2.0, 2, 'RJ')">Mini 2x</button>
+            <button class="btn-preset" onclick="setPreset(8.0, 7, null)">Black Friday 8x</button>
+          </div>
+
+          <form id="simForm" onsubmit="handleFormSubmit(event)">
+            <div class="field">
+              <label>
+                <span>Demand Surge Multiplier</span>
+                <span id="lbl_multiplier" class="num">3.0x (+300%)</span>
+              </label>
+              <input type="range" id="param_multiplier" class="slider" min="1.0" max="10.0" step="0.5" value="3.0" oninput="onMultiplierChange(this.value)">
+            </div>
+
+            <div class="field">
+              <label>Target Region (State)</label>
+              <select id="param_region" class="select-box" onchange="triggerSim()">
+                <option value="">All Regions (Nationwide)</option>
+                <option value="SP" selected>SP — São Paulo</option>
+                <option value="RJ">RJ — Rio de Janeiro</option>
+                <option value="MG">MG — Minas Gerais</option>
+                <option value="RS">RS — Rio Grande do Sul</option>
+                <option value="PR">PR — Paraná</option>
+                <option value="SC">SC — Santa Catarina</option>
+                <option value="BA">BA — Bahia</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>
+                <span>Sale Duration</span>
+                <span id="lbl_duration" class="num">3 Days</span>
+              </label>
+              <input type="range" id="param_duration" class="slider" min="1" max="14" step="1" value="3" oninput="onDurationChange(this.value)">
+            </div>
+
+            <div class="field">
+              <label>Rider Throughput (pkgs/rider/day)</label>
+              <input type="number" id="param_capacity" class="text-box" min="5" max="200" value="40">
+            </div>
+
+            <div class="field">
+              <label>Rider Daily Wage (R$ / day)</label>
+              <input type="number" id="param_wage" class="text-box" min="50" max="1000" value="150.0">
+            </div>
+
+            <div class="field">
+              <label>Warehouse Spot Lease (R$ / m³ / day)</label>
+              <input type="number" id="param_warehouse" class="text-box" min="1" max="100" value="5.0">
+            </div>
+
+            <div class="field">
+              <label>Staging Area Buffer (Safety Multiplier)</label>
+              <input type="number" id="param_buffer" class="text-box" min="1.0" max="3.0" step="0.1" value="1.3">
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <span>🚀 Run Surge Simulation</span>
+            </button>
+          </form>
         </div>
 
-        <form id="surgeForm" onsubmit="handleSimulate(event)">
-          <div class="form-group">
-            <label>
-              <span>Demand Surge Multiplier</span>
-              <span id="lbl_multiplier" class="val">3.0x (+300%)</span>
-            </label>
-            <input type="range" id="param_multiplier" class="input-range" min="1.0" max="10.0" step="0.5" value="3.0" oninput="updateMultiplier(this.value)">
+        <!-- Results Column -->
+        <div class="panel" style="position: relative;">
+          <div id="busyIndicator" class="busy-overlay">
+            <span>⚡ Calculating fleet requirements & SQL baseline metrics...</span>
           </div>
 
-          <div class="form-group">
-            <label>Target Delivery Region (State)</label>
-            <select id="param_region" class="input-select" onchange="runSim()">
-              <option value="">All Regions (Nationwide)</option>
-              <option value="SP" selected>SP — São Paulo</option>
-              <option value="RJ">RJ — Rio de Janeiro</option>
-              <option value="MG">MG — Minas Gerais</option>
-              <option value="RS">RS — Rio Grande do Sul</option>
-              <option value="PR">PR — Paraná</option>
-              <option value="SC">SC — Santa Catarina</option>
-              <option value="BA">BA — Bahia</option>
-            </select>
+          <!-- Risk Assessment Banner -->
+          <div id="riskBanner" class="risk-banner risk-HIGH">
+            <div class="risk-heading">
+              <span>Operational Risk:</span>
+              <div class="risk-tag"><span id="riskBadgeText">HIGH</span></div>
+            </div>
+            <div style="font-size: 0.78rem; font-family: var(--font-mono); color: #cbd5e1;" id="simMeta">Sim ID: Ready</div>
           </div>
 
-          <div class="form-group">
-            <label>
-              <span>Flash Sale Duration</span>
-              <span id="lbl_duration" class="val">3 Days</span>
-            </label>
-            <input type="range" id="param_duration" class="input-range" min="1" max="14" step="1" value="3" oninput="updateDuration(this.value)">
+          <!-- 4 KPI Metric Cards -->
+          <div class="kpi-row">
+            <div class="kpi-tile" style="--tile-bar: #38bdf8;">
+              <div class="kpi-title">🛵 Fleet Sizing</div>
+              <div class="kpi-stat" id="kpi_riders">0</div>
+              <div class="kpi-sub" id="kpi_rider_days">0 total rider-days</div>
+            </div>
+
+            <div class="kpi-tile" style="--tile-bar: #a855f7;">
+              <div class="kpi-title">🏬 Warehouse Footprint</div>
+              <div class="kpi-stat" id="kpi_space">0.0 m²</div>
+              <div class="kpi-sub" id="kpi_volume">0.0 m³ package staging</div>
+            </div>
+
+            <div class="kpi-tile" style="--tile-bar: #10b981;">
+              <div class="kpi-title">💰 Marginal Cost</div>
+              <div class="kpi-stat" id="kpi_cost">R$ 0</div>
+              <div class="kpi-sub" id="kpi_cost_per_order">R$ 0.00 / order</div>
+            </div>
+
+            <div class="kpi-tile" style="--tile-bar: #06b6d4;">
+              <div class="kpi-title">📦 Surge Volume</div>
+              <div class="kpi-stat" id="kpi_orders">0</div>
+              <div class="kpi-sub" id="kpi_baseline_daily">Baseline: 0 / day</div>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label>Rider Delivery Capacity (pkgs/rider/day)</label>
-            <input type="number" id="param_capacity" class="input-text" min="5" max="200" value="40">
+          <!-- Actionable SLA Optimization Impact -->
+          <div class="sla-impact-card">
+            <div class="sla-impact-top">
+              <div class="sla-impact-title">
+                <span>🎯</span>
+                <strong>Actionable SLA Optimization Impact</strong>
+              </div>
+              <span class="sla-impact-badge">-25.0% SLA Breaches</span>
+            </div>
+            <div class="sla-stats-grid">
+              <div class="sla-stat-box">
+                <div class="sla-stat-label">Unmitigated Surge Breach</div>
+                <div id="sla_unmitigated" class="sla-stat-val" style="color: #fb7185;">0.0%</div>
+              </div>
+              <div class="sla-stat-box">
+                <div class="sla-stat-label">Optimized Breach Rate</div>
+                <div id="sla_optimized" class="sla-stat-val" style="color: #34d399;">0.0%</div>
+              </div>
+              <div class="sla-stat-box">
+                <div class="sla-stat-label">Protected Deliveries</div>
+                <div id="sla_prevented" class="sla-stat-val" style="color: #38bdf8;">0</div>
+              </div>
+            </div>
+            <p id="sla_explanation" class="sla-explanation"></p>
           </div>
 
-          <div class="form-group">
-            <label>Temporary Rider Wage (R$ / day)</label>
-            <input type="number" id="param_wage" class="input-text" min="50" max="1000" value="150.0">
+          <!-- Formulas & Logic Breakdown -->
+          <div class="note-box">
+            <div class="note-title">🛵 Fleet Sizing Logic</div>
+            <div class="note-body" id="exp_fleet">Computing fleet allocation...</div>
           </div>
 
-          <div class="form-group">
-            <label>Warehouse Spot Lease (R$ / m³ / day)</label>
-            <input type="number" id="param_warehouse" class="input-text" min="1" max="100" value="5.0">
+          <div class="note-box">
+            <div class="note-title">🏬 Warehouse Footprint Calculation (2m Stacking Height)</div>
+            <div class="note-body" id="exp_space">Computing storage footprint...</div>
           </div>
 
-          <div class="form-group">
-            <label>Staging Buffer Factor (Footprint Safety Multiplier)</label>
-            <input type="number" id="param_buffer" class="input-text" min="1.0" max="3.0" step="0.1" value="1.3">
+          <div class="note-box">
+            <div class="note-title">💰 Marginal Operational Cost Projection</div>
+            <div class="note-body" id="exp_cost">Computing marginal expenditure...</div>
           </div>
 
-          <button type="submit" class="btn-run">
-            <span>🚀 Run Surge Simulation</span>
-          </button>
-        </form>
+          <!-- Bottlenecks & Recommendations -->
+          <div style="margin-top: 1.4rem;">
+            <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.6rem; color: #f1f5f9;">Identified Bottlenecks & Strategic Mitigations</h3>
+            <div id="bottlenecksList"></div>
+            <div id="recommendationsList"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: SQL Baseline Analytics -->
+    <section id="analytics" class="panel">
+      <div class="section-head">
+        <h2>📊 SQL Baseline Operational Intelligence</h2>
+        <p>Real historical benchmarks extracted from the Olist delivery dataset via CTEs and Window Functions.</p>
       </div>
 
-      <!-- RIGHT: Simulation Results -->
-      <div class="card" style="position: relative;">
-        <div id="simLoader" class="loading-overlay">
-          <span>⚡ Computing baseline analytics & logistics sizing...</span>
-        </div>
-
-        <div id="riskBanner" class="risk-banner risk-HIGH">
-          <div class="risk-title">
-            <span>Operational Risk Assessment:</span>
-            <div class="risk-badge"><span id="riskText">HIGH</span></div>
-          </div>
-          <div style="font-size: 0.8rem; font-family: var(--mono); color: #cbd5e1;" id="simMeta">Simulation: Ready</div>
-        </div>
-
-        <!-- 4 KPI Cards -->
-        <div class="kpi-grid">
-          <div class="kpi-card" style="--kpi-color: #3b82f6;">
-            <div class="kpi-label">🛵 Fleet Sizing</div>
-            <div class="kpi-value" id="kpi_riders">0</div>
-            <div class="kpi-desc" id="kpi_rider_days">0 total rider-days needed</div>
-          </div>
-
-          <div class="kpi-card" style="--kpi-color: #8b5cf6;">
-            <div class="kpi-label">🏬 Warehouse Staging</div>
-            <div class="kpi-value" id="kpi_space">0.0 m²</div>
-            <div class="kpi-desc" id="kpi_volume">0.0 m³ package staging volume</div>
-          </div>
-
-          <div class="kpi-card" style="--kpi-color: #10b981;">
-            <div class="kpi-label">💰 Marginal Cost</div>
-            <div class="kpi-value" id="kpi_cost">R$ 0</div>
-            <div class="kpi-desc" id="kpi_cost_per_order">R$ 0.00 marginal / order</div>
-          </div>
-
-          <div class="kpi-card" style="--kpi-color: #06b6d4;">
-            <div class="kpi-label">📦 Projected Orders</div>
-            <div class="kpi-value" id="kpi_orders">0</div>
-            <div class="kpi-desc" id="kpi_baseline_daily">Baseline: 0 / day</div>
-          </div>
-        </div>
-
-        <!-- SLA Breach Mitigation Impact Card -->
-        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 1.25rem;">🎯</span>
-              <strong style="font-size: 0.95rem; color: #34d399;">Actionable SLA Optimization Impact</strong>
-            </div>
-            <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-weight: 800; font-size: 0.8rem; padding: 3px 12px; border-radius: 9999px; border: 1px solid rgba(16, 185, 129, 0.4);">
-              -25.0% SLA Breaches
-            </span>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 0.75rem; text-align: center;">
-            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem; border-radius: 8px; border: 1px solid #1f2937;">
-              <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Unmitigated Surge Breach</div>
-              <div id="sla_unmitigated" style="font-size: 1.2rem; font-weight: 800; color: #fb7185; margin-top: 2px;">0.0%</div>
-            </div>
-            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem; border-radius: 8px; border: 1px solid #1f2937;">
-              <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Optimized FlashFleet Breach</div>
-              <div id="sla_optimized" style="font-size: 1.2rem; font-weight: 800; color: #34d399; margin-top: 2px;">0.0%</div>
-            </div>
-            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem; border-radius: 8px; border: 1px solid #1f2937;">
-              <div style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Orders Protected</div>
-              <div id="sla_prevented" style="font-size: 1.2rem; font-weight: 800; color: #38bdf8; margin-top: 2px;">0</div>
-            </div>
-          </div>
-          <p id="sla_explanation" style="font-size: 0.82rem; color: #cbd5e1; margin-top: 0.85rem; line-height: 1.55;"></p>
-        </div>
-
-        <!-- Explanations & Formulas -->
-        <div class="breakdown-card">
-          <div class="breakdown-header">🛵 Fleet Requirement Logic</div>
-          <div class="breakdown-text" id="exp_fleet">Loading fleet explanation...</div>
-        </div>
-
-        <div class="breakdown-card">
-          <div class="breakdown-header">🏬 Warehouse Space Calculation (2m Stacking Limit)</div>
-          <div class="breakdown-text" id="exp_space">Loading space explanation...</div>
-        </div>
-
-        <div class="breakdown-card">
-          <div class="breakdown-header">💰 Marginal Cost Breakdown</div>
-          <div class="breakdown-text" id="exp_cost">Loading cost explanation...</div>
-        </div>
-
-        <!-- Bottlenecks & Recommendations -->
-        <div class="alerts-container">
-          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.6rem; color: #f1f5f9;">Identified Bottlenecks & Mitigations</h3>
-          <div id="bottlenecksList"></div>
-          <div id="recommendationsList"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- BOTTOM: SQL Baseline Analytics Module -->
-    <div class="card analytics-section">
-      <h2 class="card-title">📊 SQL Baseline Operational Intelligence</h2>
-      <p class="card-subtitle">Real metrics extracted via CTEs and Window Functions from the historical Olist dataset.</p>
-
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(0)">Regional SLA Breaches</button>
-        <button class="tab-btn" onclick="switchTab(1)">Freight Transit Percentiles (P90)</button>
-        <button class="tab-btn" onclick="switchTab(2)">Weekly Volume Density</button>
+      <div class="tab-bar">
+        <button class="tab-item active" onclick="activateTab(0)">Regional SLA Breaches</button>
+        <button class="tab-item" onclick="activateTab(1)">Freight Transit Percentiles (P90)</button>
+        <button class="tab-item" onclick="activateTab(2)">Weekly Volume Density</button>
       </div>
 
       <!-- Tab 1: SLA Breaches -->
-      <div id="tab0" class="tab-content active">
-        <div class="table-wrap">
+      <div id="tabPane0" class="tab-pane active">
+        <div class="table-container">
           <table>
             <thead>
               <tr>
@@ -714,16 +839,16 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                 <th>Avg Delay (Days)</th>
               </tr>
             </thead>
-            <tbody id="table_sla_body">
-              <tr><td colspan="5" style="text-align: center;">Loading regional SLA data...</td></tr>
+            <tbody id="slaTableBody">
+              <tr><td colspan="5" style="text-align: center; color: var(--p-muted);">Querying delivery SLA data...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <!-- Tab 2: Freight Transit Percentiles -->
-      <div id="tab1" class="tab-content">
-        <div class="table-wrap">
+      <div id="tabPane1" class="tab-pane">
+        <div class="table-container">
           <table>
             <thead>
               <tr>
@@ -736,16 +861,16 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                 <th>Max Transit</th>
               </tr>
             </thead>
-            <tbody id="table_transit_body">
-              <tr><td colspan="7" style="text-align: center;">Loading transit percentiles...</td></tr>
+            <tbody id="transitTableBody">
+              <tr><td colspan="7" style="text-align: center; color: var(--p-muted);">Computing transit percentiles...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <!-- Tab 3: Weekly Order Volume Density -->
-      <div id="tab2" class="tab-content">
-        <div class="table-wrap">
+      <div id="tabPane2" class="tab-pane">
+        <div class="table-container">
           <table>
             <thead>
               <tr>
@@ -755,55 +880,51 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                 <th>Overall Average</th>
               </tr>
             </thead>
-            <tbody id="table_weekly_body">
-              <tr><td colspan="4" style="text-align: center;">Loading weekly order volume...</td></tr>
+            <tbody id="weeklyTableBody">
+              <tr><td colspan="4" style="text-align: center; color: var(--p-muted);">Aggregating order volume density...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+    </section>
 
-  </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FlashFleet E-Commerce Fulfillment Simulator • Historical Brazilian E-Commerce Data (Olist) • Fast, resilient SQLite & FastAPI</p>
+  </footer>
 
   <script>
-    function updateMultiplier(val) {
+    function onMultiplierChange(val) {
       document.getElementById('lbl_multiplier').innerText = parseFloat(val).toFixed(1) + 'x (+' + ((val - 1) * 100).toFixed(0) + '%)';
     }
-    function updateDuration(val) {
+    function onDurationChange(val) {
       document.getElementById('lbl_duration').innerText = val + (val == 1 ? ' Day' : ' Days');
     }
 
     function setPreset(mult, days, region) {
-      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
       document.getElementById('param_multiplier').value = mult;
-      updateMultiplier(mult);
+      onMultiplierChange(mult);
       document.getElementById('param_duration').value = days;
-      updateDuration(days);
-      if (region !== null) {
-        document.getElementById('param_region').value = region;
-      } else {
-        document.getElementById('param_region').value = '';
-      }
-      runSim();
+      onDurationChange(days);
+      document.getElementById('param_region').value = (region !== null) ? region : '';
+      triggerSim();
     }
 
-    function switchTab(index) {
-      document.querySelectorAll('.tab-btn').forEach((b, i) => {
-        b.classList.toggle('active', i === index);
-      });
-      document.querySelectorAll('.tab-content').forEach((c, i) => {
-        c.classList.toggle('active', i === index);
-      });
+    function activateTab(index) {
+      document.querySelectorAll('.tab-item').forEach((b, i) => b.classList.toggle('active', i === index));
+      document.querySelectorAll('.tab-pane').forEach((c, i) => c.classList.toggle('active', i === index));
     }
 
-    async function handleSimulate(e) {
+    function handleFormSubmit(e) {
       if (e) e.preventDefault();
-      runSim();
+      triggerSim();
     }
 
-    async function runSim() {
-      const loader = document.getElementById('simLoader');
+    async function triggerSim() {
+      const loader = document.getElementById('busyIndicator');
       loader.style.display = 'flex';
 
       const payload = {
@@ -822,23 +943,23 @@ DASHBOARD_HTML = """<!DOCTYPE html>
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error('Simulation failed: ' + res.statusText);
+        if (!res.ok) throw new Error('Simulation endpoint failed: ' + res.statusText);
         const data = await res.json();
-        renderSimulationResults(data);
+        renderResults(data);
       } catch (err) {
-        alert('Simulation error: ' + err.message);
+        console.error('Simulation error:', err);
       } finally {
         loader.style.display = 'none';
       }
     }
 
-    function renderSimulationResults(data) {
+    function renderResults(data) {
       // Risk Banner
       const risk = data.bottleneck_analysis.risk_level;
       const banner = document.getElementById('riskBanner');
       banner.className = 'risk-banner risk-' + risk;
-      document.getElementById('riskText').innerText = risk;
-      document.getElementById('simMeta').innerText = 'Sim ID: ' + data.simulation_id.substring(0, 8) + '... | Region: ' + (data.params.target_region || 'ALL');
+      document.getElementById('riskBadgeText').innerText = risk;
+      document.getElementById('simMeta').innerText = 'Sim ID: ' + data.simulation_id.substring(0, 8) + '... | ' + (data.params.target_region || 'ALL');
 
       // KPIs
       document.getElementById('kpi_riders').innerText = data.fleet.riders_needed_per_day.toLocaleString();
@@ -846,7 +967,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       document.getElementById('kpi_space').innerText = data.space.staging_area_sqm_at_2m_height.toFixed(1) + ' m²';
       document.getElementById('kpi_volume').innerText = data.space.staging_area_m3.toFixed(2) + ' m³ staging volume';
       document.getElementById('kpi_cost').innerText = 'R$ ' + data.cost.total_marginal_cost_brl.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      document.getElementById('kpi_cost_per_order').innerText = 'R$ ' + data.cost.cost_per_order_brl.toFixed(2) + ' marginal / order';
+      document.getElementById('kpi_cost_per_order').innerText = 'R$ ' + data.cost.cost_per_order_brl.toFixed(2) + ' / order';
       document.getElementById('kpi_orders').innerText = data.fleet.total_surge_orders.toLocaleString();
       document.getElementById('kpi_baseline_daily').innerText = 'Baseline: ' + data.fleet.baseline_daily_orders.toFixed(1) + ' / day';
 
@@ -855,7 +976,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       document.getElementById('exp_space').innerText = data.space.explanation;
       document.getElementById('exp_cost').innerText = data.cost.explanation;
 
-      // SLA Optimization Impact
+      // SLA Impact
       if (data.sla_impact) {
         document.getElementById('sla_unmitigated').innerText = data.sla_impact.unmitigated_surge_breach_rate_pct.toFixed(1) + '%';
         document.getElementById('sla_optimized').innerText = data.sla_impact.optimized_breach_rate_pct.toFixed(1) + '%';
@@ -868,7 +989,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       bList.innerHTML = '';
       if (data.bottleneck_analysis.bottlenecks && data.bottleneck_analysis.bottlenecks.length > 0) {
         data.bottleneck_analysis.bottlenecks.forEach(b => {
-          bList.innerHTML += `<div class="alert-box bottleneck"><span>⚠</span><div><strong>Bottleneck Identified:</strong> ${b}</div></div>`;
+          bList.innerHTML += `<div class="callout warn"><span>⚠</span><div><strong>Bottleneck:</strong> ${b}</div></div>`;
         });
       }
 
@@ -876,40 +997,39 @@ DASHBOARD_HTML = """<!DOCTYPE html>
       rList.innerHTML = '';
       if (data.bottleneck_analysis.recommendations && data.bottleneck_analysis.recommendations.length > 0) {
         data.bottleneck_analysis.recommendations.forEach(r => {
-          rList.innerHTML += `<div class="alert-box recommendation"><span>✔</span><div><strong>Recommended Action:</strong> ${r}</div></div>`;
+          rList.innerHTML += `<div class="callout rec"><span>✔</span><div><strong>Recommendation:</strong> ${r}</div></div>`;
         });
       }
     }
 
-    // Load SQL Analytics Data on Page Load
-    async function loadAnalyticsData() {
-      // SLA Breaches
+    async function loadSqlAnalytics() {
+      // 1. SLA Breaches
       try {
         const res = await fetch('/analytics/sla-breaches');
         const list = await res.json();
-        const tbody = document.getElementById('table_sla_body');
+        const tbody = document.getElementById('slaTableBody');
         tbody.innerHTML = '';
-        list.slice(0, 12).forEach(row => {
+        list.slice(0, 10).forEach(row => {
           tbody.innerHTML += `
             <tr>
               <td><strong>${row.region}</strong></td>
               <td>${row.total_deliveries.toLocaleString()}</td>
               <td>${row.breached_orders.toLocaleString()}</td>
               <td>
-                <span class="bar-wrap"><span class="bar-fill" style="width: ${Math.min(100, row.breach_rate_pct)}%"></span></span>
+                <span class="pct-bar-bg"><span class="pct-bar-fill" style="width: ${Math.min(100, row.breach_rate_pct)}%"></span></span>
                 <strong>${row.breach_rate_pct}%</strong>
               </td>
-              <td>${row.avg_breach_days !== null ? row.avg_breach_days + ' days' : 'N/A'}</td>
+              <td>${row.avg_breach_days !== null ? row.avg_breach_days + 'd' : '—'}</td>
             </tr>
           `;
         });
-      } catch (e) { console.error('SLA fetch error', e); }
+      } catch (e) { console.error('SLA error', e); }
 
-      // Transit Percentiles
+      // 2. Freight Transit Percentiles
       try {
         const res = await fetch('/analytics/transit-percentiles');
         const list = await res.json();
-        const tbody = document.getElementById('table_transit_body');
+        const tbody = document.getElementById('transitTableBody');
         tbody.innerHTML = '';
         list.forEach(row => {
           tbody.innerHTML += `
@@ -919,39 +1039,37 @@ DASHBOARD_HTML = """<!DOCTYPE html>
               <td>${row.min_transit_days}d</td>
               <td>${row.avg_transit_days}d</td>
               <td><strong>${row.median_transit_days}d</strong></td>
-              <td><strong style="color: var(--accent-rose);">${row.p90_transit_days}d (P90)</strong></td>
+              <td><strong style="color: var(--rose);">${row.p90_transit_days}d (P90)</strong></td>
               <td>${row.max_transit_days}d</td>
             </tr>
           `;
         });
-      } catch (e) { console.error('Transit fetch error', e); }
+      } catch (e) { console.error('Transit error', e); }
 
-      // Weekly Volume
+      // 3. Weekly Volume
       try {
         const res = await fetch('/analytics/weekly-volume');
         const list = await res.json();
-        const tbody = document.getElementById('table_weekly_body');
+        const tbody = document.getElementById('weeklyTableBody');
         tbody.innerHTML = '';
-        list.slice(-15).reverse().forEach(row => {
+        list.slice(-12).reverse().forEach(row => {
           tbody.innerHTML += `
             <tr>
-              <td><code>${row.year_week}</code></td>
+              <td><code style="font-family: var(--font-mono); color: var(--p-accent);">${row.year_week}</code></td>
               <td><strong>${row.order_count.toLocaleString()} orders</strong></td>
-              <td>${row.rolling_4wk_avg} / week</td>
-              <td>${row.overall_avg} / week</td>
+              <td>${row.rolling_4wk_avg} / wk</td>
+              <td>${row.overall_avg} / wk</td>
             </tr>
           `;
         });
-      } catch (e) { console.error('Weekly fetch error', e); }
+      } catch (e) { console.error('Weekly error', e); }
     }
 
-    // Init
     window.addEventListener('DOMContentLoaded', () => {
-      runSim();
-      loadAnalyticsData();
+      triggerSim();
+      loadSqlAnalytics();
     });
   </script>
 </body>
 </html>
 """
-

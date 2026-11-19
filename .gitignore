@@ -22,3 +22,6 @@ Thumbs.db
 # Vercel output
 .vercel/
 
+# Taste skill build artifacts
+.taste-skill/
+
