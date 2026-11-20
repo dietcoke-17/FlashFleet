@@ -25,3 +25,7 @@ Thumbs.db
 # Taste skill build artifacts
 .taste-skill/
 
+# Agent skills folder
+.agents/
+skills-lock.json
+
